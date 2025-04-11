@@ -9,5 +9,8 @@ return array(
     'Slim\\' => array($vendorDir . '/slim/slim/Slim'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Jenssegers\\ImageHash\\' => array($vendorDir . '/jenssegers/imagehash/src'),
+    'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src'),
+    'Intervention\\Gif\\' => array($vendorDir . '/intervention/gif/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
 );

@@ -20,6 +20,15 @@ class ComposerStaticInit43c43a01c7335350cbbdbb77a20f1ce6
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
         ),
+        'J' => 
+        array (
+            'Jenssegers\\ImageHash\\' => 21,
+        ),
+        'I' => 
+        array (
+            'Intervention\\Image\\' => 19,
+            'Intervention\\Gif\\' => 17,
+        ),
         'F' => 
         array (
             'FastRoute\\' => 10,
@@ -38,6 +47,18 @@ class ComposerStaticInit43c43a01c7335350cbbdbb77a20f1ce6
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Jenssegers\\ImageHash\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/imagehash/src',
+        ),
+        'Intervention\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src',
+        ),
+        'Intervention\\Gif\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/gif/src',
         ),
         'FastRoute\\' => 
         array (
