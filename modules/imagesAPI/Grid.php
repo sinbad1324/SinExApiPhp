@@ -1,6 +1,5 @@
 <?php
 namespace ImageAPI;
-
 define('MAX_ERROR', '1');
 class Grid
 {
@@ -23,9 +22,14 @@ class Grid
      * @param array $color the color
      * @return bool TRUE if is black and FALSE if is not black;
      */
-    private function IsBlack(array $color): bool
+    public static function IsBlack(array $color): bool
     {
         if ($color['r'] == 0 && $color['g'] == 0 && $color['b'] == 0) return true;
+        return false;
+    }
+    public static function IsWhite(array $color): bool
+    {
+        if ($color['r'] == 255 && $color['g'] ==255 && $color['b'] == 255) return true;
         return false;
     }
     /**
@@ -37,33 +41,32 @@ class Grid
     {
         $flip = "normal";
         $size = $this->image->GetSize();
-        $x2Start = ($size["y"] / 2);
-        $x4Start = ($size["y"] / 4);
-        $x8Start = ($size["y"] / 8) * 3;
+        $x2Start = ($size["x"] / 2);
+        $x4Start = ($size["x"] / 4);
+        $x8Start = ($size["x"] / 8) * 3;
         //Motor
         $img = $this->image->image;
-        if (!$this->IsBlack($img->getImagePixelColor(0, 0)->getColor())) {
-            for ($i = 0; $i < $img->getImageWidth(); $i++) {
-                if ($this->IsBlack($img->getImagePixelColor($i, $x2Start)->getColor())) {$this->err2++;}
-                if ($this->IsBlack($img->getImagePixelColor($i, $x4Start)->getColor())){ $this->err4++;}
-                if ($this->IsBlack($img->getImagePixelColor($i, $x8Start)->getColor())){ $this->err8++;}
+        if ($this->image->bgColor == true) { // bg white
+            for ($i = 0; $i < $size["y"]; $i++) {
+                if ($this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
+                if ($this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
+                if ($this->IsBlack($img->getImagePixelColor($x8Start,$i)->getColor())){ $this->err8++;}
             }   
-        }else{
-            for ($i = 0; $i < $img->getImageWidth(); $i++) {
-                if (!$this->IsBlack($img->getImagePixelColor($i, $x2Start)->getColor())) {$this->err2++;}
-                if (!$this->IsBlack($img->getImagePixelColor($i, $x4Start)->getColor())){ $this->err4++;}
-                if (!$this->IsBlack($img->getImagePixelColor($i, $x8Start)->getColor())){ $this->err8++;}
+        }else{ //bg black
+            for ($i = 0; $i < $size["y"]; $i++) {
+                if (!$this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
+                if (!$this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
+                if (!$this->IsBlack($img->getImagePixelColor($x8Start,$i)->getColor())){ $this->err8++;}
             } 
         }
         //DEbug
-        $this->drawLine(0,$x4Start,$size['x'],$x4Start,"green");
-        $this->drawLine(0,$x2Start,$size['x'],$x2Start,"blue");
-        $this->drawLine(0,$x8Start,$size['x'],$x8Start,"red");
-
-        //DEbug
+        $this->drawLine($x4Start,0,$x4Start,$size['y'],"green");
+        $this->drawLine($x2Start,0,$x2Start,$size['y'],"blue");
+        $this->drawLine($x8Start,0,$x8Start,$size['y'],"red");
         echo $this->err2."<br>";
         echo $this->err4."<br>";
         echo $this->err8."<br>";
+        //DEbug
         $bool2 = $this->err2 < MAX_ERROR; 
         $bool4 = $this->err4 < MAX_ERROR; 
         $bool8 = $this->err8 < MAX_ERROR; 
@@ -75,6 +78,10 @@ class Grid
             $flip = "8x8";
         return $flip;
     }
+    /**
+     * 
+     * Draw A LINE into images
+     */
     private function drawLine($sx,$sy,$ex,$ey ,$color="black"){
         $draw = new \ImagickDraw();
         $draw->setStrokeColor(new \ImagickPixel( $color ));
