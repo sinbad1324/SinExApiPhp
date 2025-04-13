@@ -5,12 +5,13 @@ use Intervention\Image\Image;
 //inclues
 include_once "./modules/imagesAPI/Grid.php";
 //const
-define("UNSCALER" , 18); // apres 15 c'es pas tres precis
+define("UNSCALER" , 15); // apres 15 c'es pas tres precis
  class Img{
     //Publics
     public  $image;
     public $assetId;
     public $bgColor;
+    public $debug=true;
     //Private
     /**
      * Desciption: this class is a images class take a image ou image path and init a ImagICK class is for treaty
@@ -68,8 +69,11 @@ define("UNSCALER" , 18); // apres 15 c'es pas tres precis
     /**
      * This function return the Grid->start resutl -> (This function calculat if the image is 4x4,8x8 ,2x2, noraml)
      */
-    public function GetFlipbookIs() : string {
+    public function GetFlipbookIs($h=true) : string {
         $grd =  new Grid($this);
+        if ($h) {
+            return $grd->StartH();
+        }
         return $grd->Start();
     }
     /**
@@ -79,6 +83,7 @@ define("UNSCALER" , 18); // apres 15 c'es pas tres precis
      * @return void
      */
     public function Show(){
+        if (!$this->debug)return;
         $imageBlob = $this->image->getImageBlob();
         $base64 = base64_encode($imageBlob);
         echo "<br><img src='data:image/png;base64,$base64' /><br>";
