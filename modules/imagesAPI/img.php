@@ -2,8 +2,10 @@
 namespace ImageAPI;
 use \Imagick;
 use Intervention\Image\Image;
+use \Jenssegers\ImageHash\Hash;
 //inclues
 include_once "./modules/imagesAPI/Grid.php";
+include_once "./modules/imagesAPI/CompareImages.php";
 //const
 define("UNSCALER" , 15); // apres 15 c'es pas tres precis
  class Img{
@@ -88,6 +90,11 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
         $base64 = base64_encode($imageBlob);
         echo "<br><img src='data:image/png;base64,$base64' /><br>";
     }
+
+    public function GetHash():Hash{
+        return Comparator::$Hasher->hash($this->image);
+    }
+    
 }
 
 ?>

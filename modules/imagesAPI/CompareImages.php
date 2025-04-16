@@ -6,7 +6,7 @@ use Jenssegers\ImageHash\{
 };
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 class Comparator{
-   public static $Hasher;
+   public static ImageHash $Hasher;
    
    /**
     * This function init the hasher is  dont exsit
@@ -22,6 +22,7 @@ class Comparator{
     * @return int
     */
    public static function CreateComparate(Hash $h1 ,Hash $h2) : int {
+
         $distance = Comparator::$Hasher->distance($h1,$h2);
         return 100 - ($distance / 64 * 100);
    }
