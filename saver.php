@@ -34,7 +34,6 @@ $newData =json_decode(fread($fp, filesize($file)));
 
 $Charge = [];
 
-
 function SetNewData(&$newData,&$Charge) :void {
     foreach ($newData as $key => $value) {
         if (gettype($value) == "array") {

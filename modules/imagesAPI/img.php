@@ -38,18 +38,20 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
         $this->BlackWhiteImg();
         $this->ResizeImages(UNSCALER);
     }
+
     /**
      * Description : THis function Biniraise he image the background white and images object black
      * @param void
      * @return void
      */
     public function BlackWhiteImg() : void {
+        // var_dump($this->image->getImagePixelColor(0, $this->GetSize()["y"])->getColor());
         if (Grid::IsWhite($this->image->getImagePixelColor(0, 0)->getColor())) {
-            $this->image->thresholdImage(.55 * Imagick::getQuantumRange()['quantumRangeLong']); // Made by chatgpt // Meilleur valeur .55
+            $this->image->thresholdImage(.95 * Imagick::getQuantumRange()['quantumRangeLong']); // Made by chatgpt // Meilleur valeur .55
             $this->bgColor=true;
         }else{
             $this->bgColor=false;
-            $this->image->thresholdImage(.05 * Imagick::getQuantumRange()['quantumRangeLong']); // Made by chatgpt // Meilleur valeur .55
+            $this->image->thresholdImage(-.05 * Imagick::getQuantumRange()['quantumRangeLong']); // Made by chatgpt // Meilleur valeur .55
         }
     }
     /**

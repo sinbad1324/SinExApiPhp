@@ -24,12 +24,12 @@ class Grid
      */
     public static function IsBlack(array $color): bool
     {
-        if ($color['r'] == 0 && $color['g'] == 0 && $color['b'] == 0) return true;
+        if ($color['r'] == 0 && $color['g'] == 0 && $color['b'] == 0 ||$color["a"] == 0 ) return true;
         return false;
     }
     public static function IsWhite(array $color): bool
     {
-        if ($color['r'] == 255 && $color['g'] ==255 && $color['b'] == 255) return true;
+        if ($color['r'] == 255 && $color['g'] ==255 && $color['b'] == 255 &&$color['a'] != 0 ) return true;
         return false;
     }
     /**
@@ -46,11 +46,13 @@ class Grid
         $x8Start = ($size["y"] / 8) * 3;
         //Motor
         $img = $this->image->image;
+        var_dump($this->image->bgColor);
         if ($this->image->bgColor == true) { // bg white
             for ($i = 0; $i < $size["x"]; $i++) {
                 if ($this->IsBlack($img->getImagePixelColor($i,$x2Start)->getColor())) {$this->err2++;}
                 if ($this->IsBlack($img->getImagePixelColor($i,$x4Start)->getColor())){ $this->err4++;}
                 if ($this->IsBlack($img->getImagePixelColor($i,$x8Start)->getColor())){ $this->err8++;}
+            
             }   
         }else{ //bg black
             for ($i = 0; $i < $size["x"]; $i++) {
@@ -98,6 +100,8 @@ class Grid
         $img = $this->image->image;
         if ($this->image->bgColor == true) { // bg white
             for ($i = 0; $i < $size["x"]; $i++) {
+                // var_dump(value: $img->getImagePixelColor($i,$x2Start)->getColor());
+
                 if ($this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
                 if ($this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
                 if ($this->IsBlack($img->getImagePixelColor($x8Start,$i)->getColor())){ $this->err8++;}
