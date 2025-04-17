@@ -43,7 +43,7 @@ $assets = [
 //     }
 // }
 
-$img = new Img("AssetsData/2x2/13386835990.png");
+$img = new Img("AssetsData/2x2/87854862466158.png");
 echo $img->GetFlipbookIs() . "  ".$data["id"]." <br>";
 $img->Show();
 

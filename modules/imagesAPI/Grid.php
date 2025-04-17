@@ -24,7 +24,7 @@ class Grid
      */
     public static function IsBlack(array $color): bool
     {
-        if ($color['r'] == 0 && $color['g'] == 0 && $color['b'] == 0 ||$color["a"] == 0 ) return true;
+        if ($color['r'] == 0 && $color['g'] == 0 && $color['b'] == 0 ) return true;
         return false;
     }
     public static function IsWhite(array $color): bool
@@ -100,7 +100,7 @@ class Grid
         $img = $this->image->image;
         if ($this->image->bgColor == true) { // bg white
             for ($i = 0; $i < $size["x"]; $i++) {
-                // var_dump(value: $img->getImagePixelColor($i,$x2Start)->getColor());
+                var_dump( $img->getImagePixelColor($i,$x2Start)->getColor());
 
                 if ($this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
                 if ($this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
@@ -108,6 +108,7 @@ class Grid
             }   
         }else{ //bg black
             for ($i = 0; $i < $size["x"]; $i++) {
+                // var_dump( $img->getImagePixelColor($i,$x4Start)->getColor());
                 if (!$this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
                 if (!$this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
                 if (!$this->IsBlack($img->getImagePixelColor($x8Start,$i)->getColor())){ $this->err8++;}
@@ -119,9 +120,9 @@ class Grid
             $this->drawLine($x4Start,0,$x4Start,$size['y'],"green");
             $this->drawLine($x2Start,0,$x2Start,$size['y'],"blue");
             $this->drawLine($x8Start,0,$x8Start,$size['y'],"red");
-            echo $this->err2."<br>";
-            echo $this->err4."<br>";
-            echo $this->err8."<br>";
+            echo "<br>".$this->err2."->2x2 blue <br>";
+            echo $this->err4."->4x4 green <br>";
+            echo $this->err8."->8x8 red <br>";
         }
         //DEbug
         $bool2 = $this->err2 < MAX_ERROR; 
