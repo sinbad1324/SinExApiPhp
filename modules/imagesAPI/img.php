@@ -15,7 +15,6 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
     public $bgColor;
     public $debug=true;
     private $hash;
-    private $size;
     //Private
     /**
      * Desciption: this class is a images class take a image ou image path and init a ImagICK class is for treaty
@@ -47,7 +46,7 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
      * @return void
      */
     public function BlackWhiteImg() : void {
-        var_dump($this->image->getImagePixelColor(0, $this->GetSize()["y"])->getColor());
+        // var_dump($this->image->getImagePixelColor(0, $this->GetSize()["y"])->getColor());
         if (Grid::IsWhite($this->image->getImagePixelColor(0, 0)->getColor())) {
             $this->image->thresholdImage(.95 * Imagick::getQuantumRange()['quantumRangeLong']); // Made by chatgpt // Meilleur valeur .55
             $this->bgColor=true;
@@ -70,10 +69,8 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
      * Description: This functione give u the image modified or not; Like [x:0,y:0];
      */
     function GetSize() : array {
-        if ($this->size == null) {
-            $this->size =["x"=>$this->image->getImageWidth() , "y"=>$this->image->getImageHeight()];
-        }
-        return$this->size;
+        
+        return["x"=>$this->image->getImageWidth() , "y"=>$this->image->getImageHeight()];
     }
     /**
      * This function return the Grid->start resutl -> (This function calculat if the image is 4x4,8x8 ,2x2, noraml)
@@ -92,7 +89,7 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
      * @return void
      */
     public function Show(){
-        if (!$this->debug)return;
+        // if (!$this->debug)return;
         $imageBlob = $this->image->getImageBlob();
         $base64 = base64_encode($imageBlob);
         echo "<br><img src='data:image/png;base64,$base64' /><br>";
@@ -109,14 +106,17 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
         foreach ($data[$flip] as $key => $value) {
             $somme=0;
             foreach ($value as $H) {
-                $somme += Comparator::CreateComparate($this->GetHash() , $H);
+                $diff= Comparator::CreateComparate($this->GetHash() , $H);
+                if ($diff == 100) {
+                   return ["size"=>$this->GetSize() , "Flipbook"=>$flip , "categorie"=>$value];
+                }
+                $somme += $diff;
             }
             $avg[$key] = $somme/count($value);
         }
         asort($avg);
         return ["size"=>$this->GetSize() , "Flipbook"=>$flip , "categorie"=>array_keys($avg)[0]];
     }
-    
     /**
      * 
      * the function hash a image with color and pixels

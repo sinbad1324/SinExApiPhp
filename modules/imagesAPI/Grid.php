@@ -46,9 +46,15 @@ class Grid
         $x8Start = ($size["y"] / 8) * 3;
         //Motor
         $img = $this->image->image;
-        var_dump($this->image->bgColor);
+        // var_dump($this->image->bgColor);
         if ($this->image->bgColor == true) { // bg white
             for ($i = 0; $i < $size["x"]; $i++) {
+             if ($this->image->debug) {
+                var_dump( $img->getImagePixelColor($i,$x2Start)->getColor())."2x2 white <br>";
+                var_dump( $img->getImagePixelColor($i,$x4Start)->getColor())."4x4 white <br>";
+                var_dump( $img->getImagePixelColor($i,$x8Start)->getColor())."8x8 white <br>";
+
+             }
                 if ($this->IsBlack($img->getImagePixelColor($i,$x2Start)->getColor())) {$this->err2++;}
                 if ($this->IsBlack($img->getImagePixelColor($i,$x4Start)->getColor())){ $this->err4++;}
                 if ($this->IsBlack($img->getImagePixelColor($i,$x8Start)->getColor())){ $this->err8++;}
@@ -56,6 +62,11 @@ class Grid
             }   
         }else{ //bg black
             for ($i = 0; $i < $size["x"]; $i++) {
+                if ($this->image->debug) {
+                    var_dump( $img->getImagePixelColor($i,$x2Start)->getColor())."2x2 black <br>";
+                    var_dump( $img->getImagePixelColor($i,$x4Start)->getColor())."4x4 black <br>";  
+                    var_dump( $img->getImagePixelColor($i,$x8Start)->getColor())."8x8 black <br>";
+                }
                 if (!$this->IsBlack($img->getImagePixelColor($i,$x2Start)->getColor())) {$this->err2++;}
                 if (!$this->IsBlack($img->getImagePixelColor($i,$x4Start)->getColor())){ $this->err4++;}
                 if (!$this->IsBlack($img->getImagePixelColor($i,$x8Start)->getColor())){ $this->err8++;}
@@ -99,16 +110,31 @@ class Grid
         //Motor
         $img = $this->image->image;
         if ($this->image->bgColor == true) { // bg white
+            if ($this->image->debug) {
+            echo "<h1>WHITE</h1>";
+            }
             for ($i = 0; $i < $size["x"]; $i++) {
-                var_dump( $img->getImagePixelColor($i,$x2Start)->getColor());
-
+                if ($this->image->debug) {
+                    var_dump( $img->getImagePixelColor($i,$x2Start)->getColor())."2x2 white <br>";
+                    var_dump( $img->getImagePixelColor($i,$x4Start)->getColor())."4x4 white <br>";
+                    var_dump( $img->getImagePixelColor($i,$x8Start)->getColor())."8x8 white <br>";
+    
+                 }
                 if ($this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
                 if ($this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
                 if ($this->IsBlack($img->getImagePixelColor($x8Start,$i)->getColor())){ $this->err8++;}
             }   
         }else{ //bg black
+            if ($this->image->debug) {
+                echo "<h1>Black</h1>";
+                }
             for ($i = 0; $i < $size["x"]; $i++) {
-                // var_dump( $img->getImagePixelColor($i,$x4Start)->getColor());
+                if ($this->image->debug) {
+                    var_dump( $img->getImagePixelColor($i,$x2Start)->getColor())."2x2 black <br>";
+                    var_dump( $img->getImagePixelColor($i,$x4Start)->getColor())."4x4 black <br>";  
+                    var_dump( $img->getImagePixelColor($i,$x8Start)->getColor())."8x8 black <br>";
+                }          
+                      
                 if (!$this->IsBlack($img->getImagePixelColor($x2Start,$i)->getColor())) {$this->err2++;}
                 if (!$this->IsBlack($img->getImagePixelColor($x4Start,$i)->getColor())){ $this->err4++;}
                 if (!$this->IsBlack($img->getImagePixelColor($x8Start,$i)->getColor())){ $this->err8++;}
@@ -142,12 +168,14 @@ class Grid
      * Draw A LINE into images
      */
     private function drawLine($sx,$sy,$ex,$ey ,$color="black"){
+
         $draw = new \ImagickDraw();
         $draw->setStrokeColor(new \ImagickPixel( $color ));
         $draw->setFillColor(new \ImagickPixel( $color ));
         $draw->setStrokeWidth(2);
         $draw->setFontSize(72);
         $draw->line($sx,$sy,$ex,$ey);
+        
         $this->image->image->drawImage($draw);
     }
 }

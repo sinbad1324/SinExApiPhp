@@ -1,12 +1,20 @@
 <?php 
 require_once "./vendor/autoload.php";
+require_once "./modules/imagesAPI/img.php";
+require_once "./modules/imagesAPI/getImageFromRoblox.php";
+require_once "./modules/imagesAPI/CompareImages.php";
+set_time_limit(0);
 
 use Jenssegers\ImageHash\{
     ImageHash,
     Hash
 };
+use ImageAPI\{
+    Img,
+    GetImageFromRoblox
+};
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
-$dir = "./AssetsData";
+$dir = "./images";
 $data=[];
 $hasher= new ImageHash(new DifferenceHash());
 function SetFolders(string $dir , &$data) :void {
@@ -23,16 +31,17 @@ function SetFolders(string $dir , &$data) :void {
 }
 
 
-// SetFolders($dir,$data);
-// $fp = fopen("./Data/AssetsData.json","w");
-// fwrite($fp , json_encode($data ));
-// fclose($fp);
 
-$file = "./Data/AssetsData.json";
-$fp = fopen($file ,"r");
-$newData =json_decode(fread($fp, filesize($file)));
+SetFolders($dir,$data);
+$fp = fopen("./Data/AssetsData.json","w");
+fwrite($fp , json_encode($data ));
+fclose($fp);
 
-$Charge = [];
+// $file = "./Data/AssetsData.json";
+// $fp = fopen($file ,"r");
+// $newData =json_decode(fread($fp, filesize($file)));
+
+// $Charge = [];
 
 function SetNewData(&$newData,&$Charge) :void {
     foreach ($newData as $key => $value) {
@@ -46,8 +55,19 @@ function SetNewData(&$newData,&$Charge) :void {
      }
 }
 
-// SetNewData($newData , $Charge);
+SetNewData($newData , $Charge);
 
-// var_dump($Charge);
+
+// $dict = "./images";
+// foreach(scandir($dict) as $fichier){
+//     if(preg_match("#\.(jpg|jpeg|png|bmp|tif)$#i", $fichier)){
+//         $img = new Img("$dict/$fichier");
+//         $img->debug = false;
+//         $flip =  $img->GetFlipbookIs();
+//         // echo $img->GetFlipbookIs()." <br>";
+//         // $img->Show();
+//         rename("$dict/$fichier","$dict/$flip/$fichier");
+//     }
+// }
 
 ?>
