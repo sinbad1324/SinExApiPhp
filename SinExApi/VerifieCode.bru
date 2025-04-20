@@ -1,0 +1,16 @@
+meta {
+  name: VerifieCode
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8080/api/auth/verifie-code?code="sMu276"&id=2
+  body: none
+  auth: inherit
+}
+
+params:query {
+  code: "sMu276"
+  id: 2
+}
