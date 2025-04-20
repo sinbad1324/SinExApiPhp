@@ -15,7 +15,6 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 //Routes requires
 require_once "../src/content.php";
-require_once "../src/middleware.php";
 require_once "../src/routes.php";
 $app->run();
 

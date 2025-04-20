@@ -1,4 +1,6 @@
 <?php 
+use Services\DB\DBConnection;
+require_once "../src/Services/DBConnection.php";
 // creation dun container
 // $container = $app->getContainer();
 

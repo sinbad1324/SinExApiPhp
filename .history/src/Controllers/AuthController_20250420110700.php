@@ -7,6 +7,7 @@ require_once "../src/Services/Auth/GoogleAuthService.php";
 
 final class AuthController extends BaseController{
     public  function PostRegister(Request $request, Response $response, $args){
+        $response->getBody()->write($this->json("Succes" , [] , true));
         return $response;
     }
 
