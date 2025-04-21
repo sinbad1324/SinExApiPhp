@@ -98,8 +98,6 @@ final class AuthFilterMiddleware extends BaseMiddleware
     private function VerificationContraint(array $data): array
     {
         $errors = [];
-        if (count($errors) >= 1)
-            return $errors; // ici si on a plus que un error on return
         if (!$this->ClampString($data["userName"], 2, 50))
             array_push($errors, "Le nom d'utilisateur doit contenir entre 2 et 50 caractères");
         if (!$this->ClampString($data["email"], 2, 255))

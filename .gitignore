@@ -1,2 +1,3 @@
 # .gitignor
 *.env
+.history/

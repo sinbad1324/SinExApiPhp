@@ -1,1 +1,0 @@
-composer require jenssegers/imagehash

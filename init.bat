@@ -12,3 +12,6 @@ composer require laminas/laminas-diactoros
 composer require google/apiclient:^2.15.0
 @REM Mailer for php
 composer require phpmailer/phpmailer
+@REM jwt lib
+composer require web-token/jwt-framework
+

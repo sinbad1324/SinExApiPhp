@@ -3,7 +3,8 @@ namespace Entities;
 
 use Models\UserModel;
 use Traits\StringShuffle;
-
+use Services\JWT\JWTService;
+require_once "../src/Services/JWT/JWTService.php";
 require_once "../src/Models/UserModel.php";
 require_once "../src/Traits/StringShuffle.php";
 
@@ -16,7 +17,6 @@ final class UserEntities{
     }
 
     public function GetId() : int {
-        echo $this->userData["userId"];
         return $this->userData["userId"];
     }
     public function GetName() : string {
@@ -34,7 +34,6 @@ final class UserEntities{
         return password_verify($password , $this->userData["password"]);
     }
     public function MailPinCodeIsSame($code) : int {
-
         return  $this->userData["emailVerificationCode"] == $code;
     }
     //updates
@@ -42,10 +41,25 @@ final class UserEntities{
        return UserModel::UpdatePinCodeUser(null , $this->GetId()) && UserModel::UpdateCheckedUser(TRUE , $this->GetId());
     }
     public function RemakeNewCode() : string {
-        $code = static::RandomString(random_int(0,20),6);
-        UserModel::UpdatePinCodeUser( $code , $this->GetId());
-        return $code;
-     }
+        if (!$this->userData["verifiedEmail"]) {
+            $code = static::RandomString(random_int(0,20),6);
+            UserModel::UpdatePinCodeUser( $code , $this->GetId());
+            return $code;
+        }
+        return "";
+    }
+    public function IsChecked() : bool {
+        return $this->userData["verifiedEmail"];
+    }
+
+    public function  CreateJWTforUser() : string {
+        return JWTService::CreateNewJWT([
+            "userName"=>$this->GetName(),
+            "id"=>$this->GetId(),
+            'iat' => time(), 
+            'exp'=> (time()+604800) // une semaine
+        ]);
+    }
 }
 
 ?>
