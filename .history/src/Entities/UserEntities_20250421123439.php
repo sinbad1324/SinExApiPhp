@@ -34,12 +34,12 @@ final class UserEntities{
         return password_verify($password , $this->userData["password"]);
     }
     public function MailPinCodeIsSame($code) : int {
-
+        echo  $this->userData;
         return  $this->userData["emailVerificationCode"] == $code;
     }
     //updates
     public function SetUserToChecked() : bool {
-       return UserModel::UpdatePinCodeUser(null , $this->GetId()) && UserModel::UpdateCheckedUser(TRUE , $this->GetId());
+       return UserModel::UpdatePinCodeUser("NULL" , $this->GetId()) && UserModel::UpdateCheckedUser(TRUE , $this->GetId());
     }
     public function RemakeNewCode() : string {
         $code = static::RandomString(random_int(0,20),6);

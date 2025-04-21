@@ -32,32 +32,31 @@ final class AuthController extends BaseController
          * Data a recevoir :
          * int $id 
          * string $code size 6
+         *  
          */
         //Data se sont des donné propre nétoyer
-        if (!$data) {
+        if (!$data) 
             $response->getBody()->write($this->json("Nous avons pas recus de données!", $data));
             return $response;
-        }
-        // Verifier si on recus tout les donné car il n'y a pas de maiddelware pour verifier cela:
-        if (!isset($data["id"])) {
+            echo "yo";
+
+            // Verifier si on recus tout les donné car il n'y a pas de maiddelware pour verifier cela:
+        if (!isset($data["id"])) 
             $response->getBody()->write($this->json("Nous avons pas recus le id!", $data));
             return $response;
-        }
-        if (!isset($data["code"])) {
+        if (!isset($data["code"])) 
             $response->getBody()->write($this->json("Nous avons pas recus le code!", $data));
             return $response;
-        }
         // Verifier les contraint car il n'y a pas de maiddelware pour verifier cela:
-        if (!filter_var($data["id"], FILTER_VALIDATE_INT)==true) {
-            $response->getBody()->write($this->json("Le type du id n'est pas valide!", $data));
+        if (filter_var($data["id"], FILTER_VALIDATE_INT)) 
+            $response->getBody()->write($this->json("Le id n'est pas valide!", $data));
             return $response;
-        }
-        if (!is_string($data["code"]) || !$this->ClampString($data["code"], 5, 6)) {
-            $response->getBody()->write($this->json("le type du code n'est pas valide!", $data));
+        if (is_string($data["code"]) && $this->ClampString($data["code"], 5, 6)) 
+            $response->getBody()->write($this->json("Ce code n'est pas valide!", $data));
             return $response;
-        }
         // logiques 
-        $message = ManuelAuthServices::VerifieCode($data["code"], $data["id"]);
+        $message= ManuelAuthServices::VerifieCode($data["code"] , $data["id"]);
+
         if ($message) {  // si il y un message c'es qu'il y une erreur 
             $response->getBody()->write($message);
             return $response;

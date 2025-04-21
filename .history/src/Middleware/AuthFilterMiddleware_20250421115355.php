@@ -8,7 +8,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Traits\MinMaxStr;
 
 require_once "../src/Middleware/BaseMiddleware.php";
-require_once "../src/Traits/MinMaxStr.php";
+require_once "../src/Traits/ClampString.php";
 
 final class AuthFilterMiddleware extends BaseMiddleware
 {

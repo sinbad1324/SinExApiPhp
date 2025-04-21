@@ -2,14 +2,12 @@
 namespace src\Controllers;
 use Psr\Container\ContainerInterface;
 use Traits\DataFormatTrait;
-use Traits\MinMaxStr;
-
 //requires
 require_once "../src/Traits/DataFormatTrait.php";
-require_once "../src/Traits/MinMaxStr.php";
-
 class BaseController{
     use DataFormatTrait,MinMaxStr;
+    use MinMaxStr;
+
     protected $container;
     public function __construct(ContainerInterface $container)
     {

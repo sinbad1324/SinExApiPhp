@@ -43,6 +43,7 @@ final class ManuelAuthServices
      */
     public static function VerifieCode(string $code, string|int $id): string | null{
         $ud = UserModel::FindWithId($id);
+        var_dump($ud);
         if ($ud) { // verifier que le utilisateur existe;
             $user = new UserEntities($ud); // initializer le utilisateur
             if ($user->MailPinCodeIsSame($code))  // verifier si le code est la meme

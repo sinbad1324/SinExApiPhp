@@ -57,11 +57,11 @@ final class AuthController extends BaseController
             return $response;
         }
         // logiques 
-        $message = ManuelAuthServices::VerifieCode($data["code"], $data["id"]);
-        if ($message) {  // si il y un message c'es qu'il y une erreur 
-            $response->getBody()->write($message);
-            return $response;
-        }
+        // $message = ManuelAuthServices::VerifieCode($data["code"], $data["id"]);
+        // if ($message) {  // si il y un message c'es qu'il y une erreur 
+        //     $response->getBody()->write($message);
+        //     return $response;
+        // }
         $response->getBody()->write("Voutre est verifier vouliez vous vous connecter!");
         return $response;
     }

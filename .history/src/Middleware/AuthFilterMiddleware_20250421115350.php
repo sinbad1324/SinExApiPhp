@@ -5,14 +5,14 @@ namespace Middleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Traits\MinMaxStr;
+use Traits\ClampString;
 
 require_once "../src/Middleware/BaseMiddleware.php";
-require_once "../src/Traits/MinMaxStr.php";
+require_once "../src/Traits/ClampString.php";
 
 final class AuthFilterMiddleware extends BaseMiddleware
 {
-    use MinMaxStr;
+    use ClampString;
     protected function  Execute(Request $request, RequestHandler $handler): Response
     {
         $data = $request->getAttribute("dataBody");

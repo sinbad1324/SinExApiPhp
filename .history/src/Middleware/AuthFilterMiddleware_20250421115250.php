@@ -100,13 +100,13 @@ final class AuthFilterMiddleware extends BaseMiddleware
         $errors = [];
         if (count($errors) >= 1)
             return $errors; // ici si on a plus que un error on return
-        if (!$this->ClampString($data["userName"], 2, 50))
+        if (!$this->MinMaxStr($data["userName"], 2, 50))
             array_push($errors, "Le nom d'utilisateur doit contenir entre 2 et 50 caractères");
-        if (!$this->ClampString($data["email"], 2, 255))
+        if (!$this->MinMaxStr($data["email"], 2, 255))
             array_push($errors, "L'email doit contenir entre 2 et 255 caractères");
         if ($data["password"] != $data["confirmedPassword"])
             array_push($errors, "Le mot de passe et sa confirmation ne correspondent pas");
-        if (!$this->ClampString($data["password"], 8, 25))
+        if (!$this->MinMaxStr($data["password"], 8, 25))
             array_push($errors, "Le mot de passe doit contenir entre 8 et 25 caractères");
         if (!preg_match("/[0-9]/", $data["password"]))
             array_push($errors, "Le mot de passe doit contenir au moins un chiffre");
@@ -123,4 +123,14 @@ final class AuthFilterMiddleware extends BaseMiddleware
         return $errors;
     }
 
+    /**
+     * Cette function mesure la taille dun string
+     */
+    private function MinMaxStr(string $str, int $min, int $max)
+    {
+        $nameCount = strlen($str);
+        if ($nameCount > 2 && $nameCount <= 50)
+            return true;
+        return false;
+    }
 }

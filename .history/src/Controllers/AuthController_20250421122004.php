@@ -48,12 +48,12 @@ final class AuthController extends BaseController
             return $response;
         }
         // Verifier les contraint car il n'y a pas de maiddelware pour verifier cela:
-        if (!filter_var($data["id"], FILTER_VALIDATE_INT)==true) {
+        if (filter_var($data["id"], FILTER_VALIDATE_INT)) {
             $response->getBody()->write($this->json("Le type du id n'est pas valide!", $data));
             return $response;
         }
-        if (!is_string($data["code"]) || !$this->ClampString($data["code"], 5, 6)) {
-            $response->getBody()->write($this->json("le type du code n'est pas valide!", $data));
+        if (is_string($data["code"]) && $this->ClampString($data["code"], 5, 6)) {
+            $response->getBody()->write($this->json("Ce code n'est pas valide!", $data));
             return $response;
         }
         // logiques 

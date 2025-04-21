@@ -71,7 +71,7 @@ final class UserModel{
     }
 
     //updates
-    public static function UpdatePinCodeUser(string|null $newCode , $id):bool{
+    public static function UpdatePinCodeUser(string $newCode , $id):bool{
         $conn = DBConnection::GetConnection("sinox");
         $sth=$conn->prepare("UPDATE user SET emailVerificationCode=? WHERE userId =?;");
         $sth->bindParam(1 , $newCode ,PDO::PARAM_STR , 7);

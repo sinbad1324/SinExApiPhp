@@ -41,19 +41,19 @@ final class ManuelAuthServices
      * @param string $code
      * @param string|int $id
      */
-    public static function VerifieCode(string $code, string|int $id): string | null{
+    public function VerifieCode(string $code, string|int $id): string | null{
         $ud = UserModel::FindWithId($id);
-        if ($ud) { // verifier que le utilisateur existe;
-            $user = new UserEntities($ud); // initializer le utilisateur
+        if ($ud) { // verifier que le utilisateur existe
+            $user = new UserEntities($ud);
             if ($user->MailPinCodeIsSame($code))  // verifier si le code est la meme
                 if (!$user->SetUserToChecked())   // on peut le utilisateur si veifié
                     return static::json("Nous avons pas réussit a vous verifier voulez vous essayer plus tard!", []); 
-            else // le code n'est pas la meme
+            else
                 return static::json("Ce code est invalide!", []); 
         }
-        else // le code ne existe pas!
+        else
            return static::json("Ce compte n'existe pas", []); 
-        return null; // il n'y a pas eu de erreur tout ces passé bien :> xD
+        return null;
     }
 
     public function RemakeVerificationCode( $id) {

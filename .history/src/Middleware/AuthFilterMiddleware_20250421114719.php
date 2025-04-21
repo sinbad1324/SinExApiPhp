@@ -5,14 +5,11 @@ namespace Middleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Traits\MinMaxStr;
 
 require_once "../src/Middleware/BaseMiddleware.php";
-require_once "../src/Traits/MinMaxStr.php";
 
 final class AuthFilterMiddleware extends BaseMiddleware
 {
-    use MinMaxStr;
     protected function  Execute(Request $request, RequestHandler $handler): Response
     {
         $data = $request->getAttribute("dataBody");
@@ -24,21 +21,19 @@ final class AuthFilterMiddleware extends BaseMiddleware
          * confirmedPassword : string(min 8,max25)
          * ruleAccepted : bool
          */
-        // verifie la disponibilité des donnée
+
         $VCO = $this->VCO($data);
         if (count($VCO) >= 1) {
             $response = $this->responseFactory->createResponse();
             $response->getBody()->write($this->json("Il manque quelques données!", $VCO));
             return $response;
         }
-        // verifier le format 
         $VerificationFormat = $this->VerificationFormat($data);
         if (count($VerificationFormat) >= 1) {
             $response = $this->responseFactory->createResponse();
             $response->getBody()->write($this->json("Les format des données n'est pas acceptable!", $VerificationFormat));
             return $response;
         }
-        // Verifie les contraint
         $VerificationContraint = $this->VerificationContraint($data);
         if (count($VerificationContraint) >= 1) {
             $response = $this->responseFactory->createResponse();
@@ -51,8 +46,7 @@ final class AuthFilterMiddleware extends BaseMiddleware
     /**
      * name: VerificationChampsObligatoir  |
      * le but de cette function es de verifier si tou les champs sont fournis
-     *  @param array $data
-     * @return array 
+     * 
      */
     private function VCO($data): array
     {
@@ -70,11 +64,6 @@ final class AuthFilterMiddleware extends BaseMiddleware
         return $errors;
     }
 
-    /*
-    *Cette function verifie si tou les donné son du type que l'on veut?
-         * @param array $data
-     * @return array 
-    */
     private function VerificationFormat(array $data): array
     {
         $errors = [];
@@ -100,13 +89,13 @@ final class AuthFilterMiddleware extends BaseMiddleware
         $errors = [];
         if (count($errors) >= 1)
             return $errors; // ici si on a plus que un error on return
-        if (!$this->ClampString($data["userName"], 2, 50))
+        if (!$this->MinMaxStr($data["userName"], 2, 50))
             array_push($errors, "Le nom d'utilisateur doit contenir entre 2 et 50 caractères");
-        if (!$this->ClampString($data["email"], 2, 255))
+        if (!$this->MinMaxStr($data["email"], 2, 255))
             array_push($errors, "L'email doit contenir entre 2 et 255 caractères");
         if ($data["password"] != $data["confirmedPassword"])
             array_push($errors, "Le mot de passe et sa confirmation ne correspondent pas");
-        if (!$this->ClampString($data["password"], 8, 25))
+        if (!$this->MinMaxStr($data["password"], 8, 25))
             array_push($errors, "Le mot de passe doit contenir entre 8 et 25 caractères");
         if (!preg_match("/[0-9]/", $data["password"]))
             array_push($errors, "Le mot de passe doit contenir au moins un chiffre");
@@ -123,4 +112,11 @@ final class AuthFilterMiddleware extends BaseMiddleware
         return $errors;
     }
 
+    private function MinMaxStr(string $str, int $min, int $max)
+    {
+        $nameCount = strlen($str);
+        if ($nameCount > 2 && $nameCount <= 50)
+            return true;
+        return false;
+    }
 }

@@ -52,6 +52,7 @@ final class AuthController extends BaseController
             $response->getBody()->write($this->json("Le type du id n'est pas valide!", $data));
             return $response;
         }
+        var_dump(strlen($data["code"]));
         if (!is_string($data["code"]) || !$this->ClampString($data["code"], 5, 6)) {
             $response->getBody()->write($this->json("le type du code n'est pas valide!", $data));
             return $response;
