@@ -33,6 +33,7 @@ $app->post(ENTRY_POINT . '/user/password/change',UserUpdateController::class . "
 
 
 //ImageAPI
-$app->get(ENTRY_POINT . '/imagesAPI/image-all-info', ImageAPIController::class . ":GetImageAllInfo");
+$app->post(ENTRY_POINT . '/imagesAPI/image-all-info', ImageAPIController::class . ":PostImageAllInfo");
+$app->post(ENTRY_POINT . '/imagesAPI/robloxId/image-all-info', ImageAPIController::class . ":PostImageAllInfoWithRobloxId");
 
 ?>

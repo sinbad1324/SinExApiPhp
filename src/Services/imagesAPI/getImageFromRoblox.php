@@ -1,7 +1,7 @@
 <?php
 namespace Services\ImageAPI;
 use Services\Http\Request;
-include_once "./modules/http/request.php";
+require_once "../src/Services/http/request.php";
 /**
  * 
  * This function return a array with a ressource image from roblox server if the image dont existe or need a login the functione will return null or array(2) ["image"=>ressource , "id"=>string]

@@ -5,13 +5,23 @@ meta {
 }
 
 get {
-  url: http://localhost:8080/api/auth/image-all-info
+  url: http://localhost:8080/api/imagesAPI/image-all-info
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "JWT":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlVTZGVyMiIsImlkIjoyLCJpYXQiOjE3NDUyNjU0NDcsImV4cCI6MTc0NTg3MDI0N30.KbREborceFeU1zM0xnIkolVpvFtlsU5djLFcnuoigr0"
+    "JWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlVTZGVyMyIsImlkIjoxLCJpYXQiOjE3NDUzMjI1MTMsImV4cCI6MTc0NTkyNzMxM30.Gx71Ft3LkU6Sc_fQkACanTO9jXfcogQd1MvDVvcQdf8"
   }
+  
+  
+}
+
+body:form-urlencoded {
+  : 
+}
+
+body:multipart-form {
+  image1: @file(/home/sinox/Images/7.png)
 }

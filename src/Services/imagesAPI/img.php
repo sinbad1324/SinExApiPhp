@@ -4,8 +4,9 @@ use \Imagick;
 use Intervention\Image\Image;
 use \Jenssegers\ImageHash\Hash;
 //inclues
-include_once "./modules/imagesAPI/Grid.php";
-include_once "./modules/imagesAPI/CompareImages.php";
+require_once "../src/Services/imagesAPI/CompareImages.php";
+require_once "../src/Services/imagesAPI/Grid.php";
+
 //const
 define("UNSCALER" , 15); // apres 15 c'es pas tres precis
  class Img{
@@ -15,6 +16,7 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
     public $bgColor;
     public $debug=true;
     private $hash;
+    public $normalSize;
     //Private
     /**
      * Desciption: this class is a images class take a image ou image path and init a ImagICK class is for treaty
@@ -26,9 +28,15 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
             $this->image=new Imagick();
             $this->image->readImageFile($img);
         }elseif (gettype($img) == "string") {
-            $this->image=new Imagick($img);
+            if (strlen($img) > 50) {
+                $this->image=new Imagick();
+                $this->image->readImageBlob($img);
+
+            }else
+                $this->image=new Imagick($img);
         }
         $this->assetId=$assetId;
+        $this->normalSize = ["x"=>$this->image->getImageWidth() , "y"=>$this->image->getImageHeight()];
         $this->Init();
     }
     /**
@@ -89,7 +97,7 @@ define("UNSCALER" , 15); // apres 15 c'es pas tres precis
      * @return void
      */
     public function Show(){
-        // if (!$this->debug)return;
+        if (!$this->debug)return;
         $imageBlob = $this->image->getImageBlob();
         $base64 = base64_encode($imageBlob);
         echo "<br><img src='data:image/png;base64,$base64' /><br>";

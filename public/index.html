@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        <input name="image" type="file" accept="image/png, image/jpeg">
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", event => {
+            event.preventDefault();
+            const formData = new FormData(document.querySelector("form"));
+            const file = formData.get("image");
+
+            const filereader = new FileReader();
+
+            // Quand la lecture du fichier est terminée
+            filereader.onload = (eventFile) => {
+                // Le résultat contient déjà une chaîne base64, on extrait la partie base64
+                const dataURL = filereader.result;  // Exemple : "data:image/png;base64,..."
+                const base64Image = dataURL.split(",")[1];  // Extrait la partie base64 uniquement
+                
+                const body = {  
+                    "image": base64Image,  // Image sous forme de chaîne base64
+                    "JWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlVTZGVyMyIsImlkIjoxLCJpYXQiOjE3NDUzMjI1MTMsImV4cCI6MTc0NTkyNzMxM30.Gx71Ft3LkU6Sc_fQkACanTO9jXfcogQd1MvDVvcQdf8"
+                };
+
+                const url = "http://localhost:8080/api/imagesAPI/image-all-info";
+
+                // Envoyer la requête avec le corps JSON contenant l'image en base64
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",  // Très important pour un JSON
+                    },
+                    body: JSON.stringify(body)  // Convertir l'objet JavaScript en texte JSON
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Succès :', data);
+                })
+                .catch(error => {
+                    console.error('Erreur :', error);
+                });
+            };
+
+            // Lire le fichier comme DataURL (qui va produire une chaîne base64)
+            filereader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
