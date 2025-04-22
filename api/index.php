@@ -12,13 +12,13 @@ require_once "../src/constants.php";
 //Codes
 $container = new Container();
 AppFactory::setContainer($container);
-header("Access-Control-Allow-Headers: Content-Type");
 
 $app = AppFactory::create();
 //Routes requires
 require_once "../src/content.php";
 require_once "../src/middleware.php";
 require_once "../src/routes.php";
+
 $app->run();
 
 ?>

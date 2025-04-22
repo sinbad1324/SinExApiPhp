@@ -1,0 +1,18 @@
+meta {
+  name: updateEmail
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:8080/api/user/update/email
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "JWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlVTZGVyMiIsImlkIjoyLCJpYXQiOjE3NDUyNjU0NDcsImV4cCI6MTc0NTg3MDI0N30.KbREborceFeU1zM0xnIkolVpvFtlsU5djLFcnuoigr0",
+  "email":"exemple24gmail.com"
+  }
+}

@@ -3,6 +3,7 @@ namespace src\Controllers;
 use Psr\Container\ContainerInterface;
 use Traits\DataFormatTrait;
 use Traits\MinMaxStr;
+use Traits\StringShuffle;
 
 //requires
 require_once "../src/Traits/DataFormatTrait.php";

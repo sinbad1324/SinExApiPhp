@@ -1,5 +1,5 @@
 <?php
-namespace ImageAPI;
+namespace Services\ImageAPI;
 use Jenssegers\ImageHash\{
     ImageHash,
     Hash

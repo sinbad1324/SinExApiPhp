@@ -77,7 +77,7 @@ final class JWTService
         $payload = static::VerifieJWT($JWT);
         if ($payload) 
             if (isset($payload["exp"])) 
-                if ($payload["exp"] < time()) 
+                if ($payload["exp"] > time()) 
                     return $payload;
         return null;
     }

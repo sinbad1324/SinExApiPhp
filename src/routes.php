@@ -6,8 +6,13 @@ use Middleware\IdFilterMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use src\Controllers\AuthController;
+use src\Controllers\ImageAPIController;
+use src\Controllers\UserUpdateController;
+
 //requires
 require_once "../src/Controllers/AuthController.php";
+require_once "../src/Controllers/ImageAPIController.php";
+require_once "../src/Controllers/UserUpdateController.php";
 require_once "../src/Middleware/AuthFilterMiddleware.php";
 require_once "../src/Middleware/IdFilterMiddleware.php";
 
@@ -20,5 +25,14 @@ $app->get(ENTRY_POINT . '/auth/verifie-code', AuthController::class . ":GetVerif
 //GoogleAuth
 $app->get(ENTRY_POINT . '/auth/google-connection', AuthController::class . ":GetGoogleConnectionURL");
 $app->get(ENTRY_POINT . '/auth/google-get-connection', AuthController::class . ":GetGoogleConnectionData");
+//User Updaes
+$app->put(ENTRY_POINT . '/user/update/username/{name}',UserUpdateController::class . ":PutUpdateName");
+$app->put(ENTRY_POINT . '/user/update/email',UserUpdateController::class . ":PutUpdateEmail");
+$app->post(ENTRY_POINT . '/user/password/code',UserUpdateController::class . ":PostCodeGenerator");
+$app->post(ENTRY_POINT . '/user/password/change',UserUpdateController::class . ":PostChangePassword");
+
+
+//ImageAPI
+$app->get(ENTRY_POINT . '/imagesAPI/image-all-info', ImageAPIController::class . ":GetImageAllInfo");
 
 ?>

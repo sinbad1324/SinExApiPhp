@@ -1,5 +1,5 @@
 <?php
-namespace ImageAPI;
+namespace Services\ImageAPI;
 use \Imagick;
 use Intervention\Image\Image;
 use \Jenssegers\ImageHash\Hash;

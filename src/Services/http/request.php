@@ -1,5 +1,5 @@
 <?php
-namespace Http;
+namespace Services\Http;
 use \Client;
 /**
  * A sungloton class this class create a session with curl_init if dont exeist and send a https request with fetch

@@ -1,5 +1,5 @@
 <?php
-namespace ImageAPI;
+namespace Services\ImageAPI;
 define('MAX_ERROR', '1');
 class Grid
 {

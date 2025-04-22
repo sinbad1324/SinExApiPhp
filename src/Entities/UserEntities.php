@@ -49,7 +49,7 @@ final class UserEntities{
         return "";
     }
     public function IsChecked() : bool {
-        return $this->userData["verifiedEmail"];
+        return $this->userData["verifiedEmail"]?? false;
     }
 
     public function  CreateJWTforUser() : string {

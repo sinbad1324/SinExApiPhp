@@ -18,8 +18,10 @@ final class FilterMiddleware extends BaseMiddleware
             $dataQuery = $request->getQueryParams(); 
             $dataBody = json_decode($request->getBody()->getContents() ?? "" , true);
             //filtrer les donné
-            $this->Filter($dataBody ?? []);
-            $this->Filter($dataQuery  ?? []);
+            
+            $dataBody = $this->Filter($dataBody ?? []);
+            $dataQuery=$this->Filter($dataQuery  ?? []);
+            
             // mettre les donné pour le prochaine route
             // withAttribute return une nouvelle instance de Request
             $request=$request
@@ -28,12 +30,16 @@ final class FilterMiddleware extends BaseMiddleware
         return $handler->handle($request);
     }
 
-    private function Filter(array $data) {
+    private function Filter(array $data):array {
+        $newData=[];
         if ($data) {
             foreach ($data as $key => $value) {
-                if (is_string($value)) $value = filter_var($value , FILTER_SANITIZE_SPECIAL_CHARS);
-                if (is_string($key))$value = filter_var($key , FILTER_SANITIZE_SPECIAL_CHARS);
+                if (gettype($value)=="array") {
+                    $newData[$key] = $this->Filter($value);
+                }elseif (gettype($value)=="string")
+                    $newData[$key]=filter_var($value , FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
+        return  $newData;
     }
 }

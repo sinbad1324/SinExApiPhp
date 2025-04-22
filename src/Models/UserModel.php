@@ -113,5 +113,31 @@ final class UserModel{
         return $sth->execute();
     }
 
+    public static function UpdateUserName(string $name , $id):bool{
+        if ($name == "") return false;
+        $conn = DBConnection::GetConnection("sinox");
+        $sth=$conn->prepare("UPDATE user SET userName=? WHERE userId =?;");
+        $sth->bindParam(1 , $name ,PDO::PARAM_STR , 1);
+        $sth->bindParam(2 , $id ,PDO::PARAM_INT , 10);
+        return $sth->execute();
+    }
+    public static function UpdateUserEmail(string $email , $id):bool{
+        if ($email == "") return false;
+        $conn = DBConnection::GetConnection("sinox");
+        $sth=$conn->prepare("UPDATE user SET email=? WHERE userId =?;");
+        $sth->bindParam(1 , $email ,PDO::PARAM_STR , 1);
+        $sth->bindParam(2 , $id ,PDO::PARAM_INT , 10);
+        return $sth->execute();
+    }
+    public static function UpdateUserPassword(string $password , $id):bool{
+        if ($password == "") return false;
+        $hashedPass = password_hash($password, PASSWORD_BCRYPT, ['cost' => 13]);
+        $conn = DBConnection::GetConnection("sinox");
+        $sth=$conn->prepare("UPDATE user SET email=? WHERE userId =?;");
+        $sth->bindParam(1 , $hashedPass ,PDO::PARAM_STR , 1);
+        $sth->bindParam(2 , $id ,PDO::PARAM_INT , 10);
+        return $sth->execute();
+    }
+
 }
 ?>

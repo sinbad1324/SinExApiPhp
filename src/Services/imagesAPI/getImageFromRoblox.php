@@ -1,6 +1,6 @@
 <?php
-namespace  ImageAPI;
-use Http\Request;
+namespace Services\ImageAPI;
+use Services\Http\Request;
 include_once "./modules/http/request.php";
 /**
  * 

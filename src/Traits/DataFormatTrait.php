@@ -2,7 +2,7 @@
 namespace Traits;
 
 trait DataFormatTrait {
-    public static function json($message , $data,$status=false) :string {
+    public static function json($message , $data=[],$status=false) :string {
         return json_encode(["message"=>$message ??"", "data"=>$data??[] , "status"=>$status]);
     }
 }
