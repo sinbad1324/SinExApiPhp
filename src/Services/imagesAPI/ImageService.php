@@ -9,9 +9,10 @@ use Services\ImageAPI\{Img, GetImageFromRoblox};
 use Jenssegers\ImageHash\{
     Hash
 };
+
 final class ImageService
 {
-    public static function GetImageAllInfo(&$dataImages,&$loadedData): array
+    public static function GetImageAllInfo(&$dataImages, &$loadedData): array
     {
         $images = [];
 
@@ -27,8 +28,11 @@ final class ImageService
                 // array_push($images[$result["categorie"]], $result);
 
                 array_push($images, [
-                    "flipbook" => $img->GetFlipbookIs(),
+                    "grid" => $img->GetFlipbookIs(),
                     "size" => $img->normalSize,
+                    "time" => 1,
+                    "categorie" => "none",
+                    "precision" => 100
                 ]);
             } catch (\Exception $e) {
             }
@@ -37,7 +41,7 @@ final class ImageService
     }
 
 
-    public static function GetImageAllInfoWithAssets(&$dataImages,&$loadedData): array
+    public static function GetImageAllInfoWithAssets(&$dataImages, &$loadedData): array
     {
         $images = [];
         foreach ($dataImages as $key => $asset) {
@@ -51,8 +55,11 @@ final class ImageService
                     //     $images[$result["categorie"]] = [];
                     // array_push($images[$result["categorie"]], $result);
                     array_push($images, [
-                        "flipbook" => $img->GetFlipbookIs(),
+                        "grid" => $img->GetFlipbookIs(),
                         "size" => $img->normalSize,
+                        "time" => 1,
+                        "categorie" => "none",
+                        "precision" => 100
                     ]);
                 }
             } catch (\Exception $e) {
@@ -62,23 +69,25 @@ final class ImageService
     }
 
 
-    public static function LoadData() : array {
+    public static function LoadData(): array
+    {
         $file = "../Data/AssetsData.json";
-        $fp = fopen($file ,"r");
-        $newData =json_decode(fread($fp, filesize($file)));
+        $fp = fopen($file, "r");
+        $newData = json_decode(fread($fp, filesize($file)));
         $Charge = [];
-        function SetNewData(&$newData,&$Charge) :void {
+        function SetNewData(&$newData, &$Charge): void
+        {
             foreach ($newData as $key => $value) {
                 if (gettype($value) == "array") {
                     $Charge[$key] = [];
-                    SetNewData($value , $Charge[$key]);
+                    SetNewData($value, $Charge[$key]);
                 }
-                if (gettype($value)=="string"){
-                    array_push($Charge , Hash::fromBits($value));
+                if (gettype($value) == "string") {
+                    array_push($Charge, Hash::fromBits($value));
                 }
             }
         }
-        SetNewData($newData , $Charge);
+        SetNewData($newData, $Charge);
         return $Charge;
     }
 }

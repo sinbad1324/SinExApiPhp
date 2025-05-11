@@ -1,0 +1,17 @@
+meta {
+  name: getprofile
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/user/getProfile
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "JWT":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImR3ZWR3IiwiaWQiOjIsImlhdCI6MTc0Njk1MTU0NiwiZXhwIjoxNzQ3NTU2MzQ2fQ.jgiyTwHV1-l5Ru8SAUJdsbXc1CbwEuzZXhpEzY8jSHI"
+  }
+}

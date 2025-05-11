@@ -7,10 +7,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use src\Controllers\AuthController;
 use src\Controllers\ImageAPIController;
+use src\Controllers\UserController;
 use src\Controllers\UserUpdateController;
 
 //requires
 require_once "../src/Controllers/AuthController.php";
+require_once "../src/Controllers/UserController.php";
 require_once "../src/Controllers/ImageAPIController.php";
 require_once "../src/Controllers/UserUpdateController.php";
 require_once "../src/Middleware/AuthFilterMiddleware.php";
@@ -30,6 +32,7 @@ $app->put(ENTRY_POINT . '/user/update/username/{name}',UserUpdateController::cla
 $app->put(ENTRY_POINT . '/user/update/email',UserUpdateController::class . ":PutUpdateEmail");
 $app->post(ENTRY_POINT . '/user/password/code',UserUpdateController::class . ":PostCodeGenerator");
 $app->post(ENTRY_POINT . '/user/password/change',UserUpdateController::class . ":PostChangePassword");
+$app->get(ENTRY_POINT . '/user/getProfile',UserController::class . ":GetProfile");
 
 
 //ImageAPI
