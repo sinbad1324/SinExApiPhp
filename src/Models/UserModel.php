@@ -15,17 +15,16 @@ final class UserModel{
      *Cette function est utiliser pour créé un nouveau utilisateur qui s'est inscrit manuelement sur le site
      * @param array $data
      */
-    public static function CreateManuelUser(array $data,string $CodePin)  {
+    public static function CreateManuelUser(array $data)  {
 
         if (!static::FindWithEmail($data["email"]) && !static::FindWithName($data["userName"])) {
             $conn = DBConnection::GetConnection("sinox");
-            $sth=$conn->prepare("INSERT INTO user(userName,email,password,emailVerificationCode,ruleAccepted,createdDate)VALUES(?,?,?,?,?,NOW())");
+            $sth=$conn->prepare("INSERT INTO user(userName,email,password,ruleAccepted,createdDate)VALUES(?,?,?,?,NOW())");
             $sth->bindParam(1 , $data["userName"] ,PDO::PARAM_STR , 50);
             $sth->bindParam(2 , $data["email"] ,PDO::PARAM_STR , 255);
             $hashedPass = password_hash($data["password"], PASSWORD_BCRYPT, ['cost' => 13]);
             $sth->bindParam(3 ,  $hashedPass ,PDO::PARAM_STR , 150);
-            $sth->bindParam(4 , $CodePin  ,PDO::PARAM_STR , 7);
-            $sth->bindParam(5 , $data["ruleAccepted"]  ,PDO::PARAM_BOOL );
+            $sth->bindParam(4 , $data["ruleAccepted"]  ,PDO::PARAM_BOOL );
             return $sth->execute();
         }
         return null;
@@ -97,22 +96,6 @@ final class UserModel{
     }
 
     //updates
-    public static function UpdatePinCodeUser(string|null $newCode , $id):bool{
-        $conn = DBConnection::GetConnection("sinox");
-        $sth=$conn->prepare("UPDATE user SET emailVerificationCode=? WHERE userId =?;");
-        $sth->bindParam(1 , $newCode ,PDO::PARAM_STR , 7);
-        $sth->bindParam(2 , $id ,PDO::PARAM_INT , 10);
-        return $sth->execute();
-    }
-
-    public static function UpdateCheckedUser(BOOL $newStatus , $id):bool{
-        $conn = DBConnection::GetConnection("sinox");
-        $sth=$conn->prepare("UPDATE user SET verifiedEmail=? WHERE userId =?;");
-        $sth->bindParam(1 , $newStatus ,PDO::PARAM_BOOL , 1);
-        $sth->bindParam(2 , $id ,PDO::PARAM_INT , 10);
-        return $sth->execute();
-    }
-
     public static function UpdateUserName(string $name , $id):bool{
         if ($name == "") return false;
         $conn = DBConnection::GetConnection("sinox");

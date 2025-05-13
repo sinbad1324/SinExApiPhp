@@ -1,6 +1,7 @@
 <?php
 //Namespace
 
+use Google\Service\CloudDeploy\Retry;
 use Middleware\AuthFilterMiddleware;
 use Middleware\IdFilterMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -24,19 +25,21 @@ $app->post(ENTRY_POINT . '/auth/register', AuthController::class . ":PostRegiste
 $app->post(ENTRY_POINT . '/auth/connection', AuthController::class . ":PostConnection");
 $app->get(ENTRY_POINT . '/auth/remake-new-code', AuthController::class . ":GetRemakeNewCode")->add(IdFilterMiddleware::class);
 $app->get(ENTRY_POINT . '/auth/verifie-code', AuthController::class . ":GetVerifieCode")->add(IdFilterMiddleware::class);
+$app->get(ENTRY_POINT . '/auth/double-verifie-code', AuthController::class . ":GetDoubleVerifieCode")->add(IdFilterMiddleware::class);
+
 //GoogleAuth
 $app->get(ENTRY_POINT . '/auth/google-connection', AuthController::class . ":GetGoogleConnectionURL");
 $app->get(ENTRY_POINT . '/auth/google-get-connection', AuthController::class . ":GetGoogleConnectionData");
 //User Updaes
-$app->put(ENTRY_POINT . '/user/update/username/{name}',UserUpdateController::class . ":PutUpdateName");
-$app->put(ENTRY_POINT . '/user/update/email',UserUpdateController::class . ":PutUpdateEmail");
-$app->post(ENTRY_POINT . '/user/password/code',UserUpdateController::class . ":PostCodeGenerator");
-$app->post(ENTRY_POINT . '/user/password/change',UserUpdateController::class . ":PostChangePassword");
-$app->get(ENTRY_POINT . '/user/getProfile',UserController::class . ":GetProfile");
+$app->put(ENTRY_POINT . '/user/update/username/{name}', UserUpdateController::class . ":PutUpdateName");
+$app->put(ENTRY_POINT . '/user/update/email', UserUpdateController::class . ":PutUpdateEmail");
+$app->post(ENTRY_POINT . '/user/password/code', UserUpdateController::class . ":PostCodeGenerator");
+$app->post(ENTRY_POINT . '/user/password/change', UserUpdateController::class . ":PostChangePassword");
+$app->get(ENTRY_POINT . '/user/getProfile', UserController::class . ":GetProfile");
 
 
 //ImageAPI
 $app->post(ENTRY_POINT . '/imagesAPI/image-all-info', ImageAPIController::class . ":PostImageAllInfo");
 $app->post(ENTRY_POINT . '/imagesAPI/robloxId/image-all-info', ImageAPIController::class . ":PostImageAllInfoWithRobloxId");
 
-?>
+

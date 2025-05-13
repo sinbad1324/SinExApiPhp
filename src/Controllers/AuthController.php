@@ -63,6 +63,46 @@ final class AuthController extends BaseController
         return $response;
     }
 
+      /**
+     * Ici c'est juste un controller qui es sensé recevoir la request puis le traité avec ce que le service nous propose
+     */
+    public  function GetDoubleVerifieCode(Request $request, Response $response, $args)
+    {
+        $data = $request->getAttribute('dataQuery'); // prendre les donnée depuis le middelware qui a nétoyer tout cela
+        // var_dump($data);
+        /**
+         * Data a recevoir :
+         * int $userId 
+         * string $code size 6
+         */
+        //Data se sont des donné propre nétoyer
+        if (!$data) {
+            $response->getBody()->write($this->json("Nous avons pas recus de données!", $data));
+            return $response;
+        }
+        // Verifier si on recus tout les donné car il n'y a pas de maiddelware pour verifier cela:
+        if (!isset($data["code"])) {
+            $response->getBody()->write($this->json("Nous avons pas recus le code!", $data));
+            return $response;
+        }
+        // if (!isset($data["userId"])) {
+        //     $response->getBody()->write($this->json("Nous avons pas recus le userId!", $data));
+        //     return $response;
+        // }
+        // Verifier les contraint car il n'y a pas de maiddelware pour verifier cela:
+        if (!is_string($data["code"]) || !$this->ClampString($data["code"], 5, 6)) {
+            $response->getBody()->write($this->json("le type du code n'est pas valide!", $data));
+            return $response;
+        }
+        // logiques 
+        $message = ManuelAuthServices::VerifieDoubleAuth($data);
+        if ($message) {  
+            $response->getBody()->write($message);
+            return $response;
+        }
+        $response->getBody()->write(static::json("Vous etesConnectrl!", [], true));
+        return $response;
+    }
     /**
      * Cette methodes permet de recréé un nouveau code pour un utilisateur
      */
@@ -70,7 +110,7 @@ final class AuthController extends BaseController
     {
         //Data se sont des donné propre nétoyer
         $data = $request->getAttribute('dataQuery');
-        $newResponse = ManuelAuthServices::RemakeVerificationCode($data);
+        $newResponse = ManuelAuthServices::RemakeVerificationCode($data["id"]);
         $response->getBody()->write($newResponse);
         return $response;
     }

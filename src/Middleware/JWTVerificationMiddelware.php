@@ -18,7 +18,7 @@ final class JWTVerificationMiddelware extends BaseMiddleware
         $response = $this->responseFactory->createResponse();
             // Ne pas laisser cetin routes
         $routeUrls= $request->getUri()->getPath();
-        $ignoreUrls = ["/api/auth/register","/api/auth/connection","/api/auth/remake-new-code","/api/auth/verifie-code","/api/auth/google-connection","/api/auth/google-get-connection"];
+        $ignoreUrls = ["/api/auth/register","/api/auth/connection","/api/auth/remake-new-code","/api/auth/double-verifie-code","/api/auth/verifie-code","/api/auth/google-connection","/api/auth/google-get-connection" ];
         // nous allos laisser passer tout les auth 
         if (in_array($routeUrls , $ignoreUrls)) return $handler->handle($request);
 
