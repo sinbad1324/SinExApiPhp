@@ -104,7 +104,7 @@ final class ManuelAuthServices
             if ($user->PasswordIsSame($data["password"])) {
                 $codePin =static::RandomString(20,6);
                 UserSecurCode::CreateNewCode($user->GetId(), $codePin , 1 , "DoubleAuth");
-                if (Mailer::Send($user->GetEmail() , $user->GetName() , "Double auh verification" ,"http://localhost:8080/api/auth/double-verifie-code?code=$codePin&id=".$user->GetId() )) {
+                if (Mailer::Send($user->GetEmail() , $user->GetName() , "Double auh verification" ,"http://localhost:5173/auth/double-auth-verification?code=$codePin&id=".$user->GetId() )) {
                     return static::json("Un mail vous a été envoyer!!!", [],true);
                 }
             }

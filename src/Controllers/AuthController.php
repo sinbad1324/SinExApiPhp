@@ -175,11 +175,12 @@ final class AuthController extends BaseController
             return $response;
         }
 
-        if ($data["prompt"] == "consent") {
+        // if ($data["prompt"] == "consent") {
             $newOAuthService = new GoogleAuthService();
             $ServiceResponse=$newOAuthService->Connection($data);
             $response->getBody()->write($ServiceResponse);
-        }
+        // }
+        $response->getBody()->write(static::json("Votre compte n'est pas créé selon votre souhet!",$data,false));
 
         return $response;
     }

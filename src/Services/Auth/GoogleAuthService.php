@@ -27,7 +27,7 @@ class GoogleAuthService {
             $this->client->setClientSecret($_ENV['GOOGLE_SECRET']); 
             $this->client->addScope('email');
             $this->client->addScope('profile');
-            $this->client->setRedirectUri("http://localhost:8080/api/auth/google-get-connection");
+            $this->client->setRedirectUri("http://localhost:5173/auth/google-connection");
             $this->client->setAccessType('online');
             $this->client->setIncludeGrantedScopes(true);   
     }
@@ -41,6 +41,9 @@ class GoogleAuthService {
         // le token puis se connecté
         $client = $this->client;
         $access_token = $client->fetchAccessTokenWithAuthCode($data["code"]);
+        if (isset($access_token["error"])) {
+            return static::json("Il y a eu un probléme lors de la creation de votre compte le code d'authethification est faux! ");
+        }
         $client->setAccessToken($access_token);
         // avoir les infos avec l'api Oauth2!
         $oauth2 = new Oauth2($client);
@@ -74,7 +77,7 @@ class GoogleAuthService {
             $user = new UserEntities(UserModel::GetLastUserAdded());
             return static::json("Vous etes connecté!" , ["JWT"=> $user->CreateJWTforUser(),"userData"=>["userName"=>$user->GetName(),"userId"=>$user->GetId()]] ,true);
         }
-        return static::json("Il y a eu un probléme lors de la creation de votre compte!",[]);
+        return static::json("Il y a eu un probléme lors de la creation de votre compte!",$access_token);
     }
 
 }

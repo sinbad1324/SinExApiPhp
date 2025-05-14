@@ -36,8 +36,6 @@ $app->put(ENTRY_POINT . '/user/update/email', UserUpdateController::class . ":Pu
 $app->post(ENTRY_POINT . '/user/password/code', UserUpdateController::class . ":PostCodeGenerator");
 $app->post(ENTRY_POINT . '/user/password/change', UserUpdateController::class . ":PostChangePassword");
 $app->get(ENTRY_POINT . '/user/getProfile', UserController::class . ":GetProfile");
-
-
 //ImageAPI
 $app->post(ENTRY_POINT . '/imagesAPI/image-all-info', ImageAPIController::class . ":PostImageAllInfo");
 $app->post(ENTRY_POINT . '/imagesAPI/robloxId/image-all-info', ImageAPIController::class . ":PostImageAllInfoWithRobloxId");
