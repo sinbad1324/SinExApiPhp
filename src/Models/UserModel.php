@@ -34,7 +34,7 @@ final class UserModel{
 
         if (!static::FindWithEmail($data["email"]) && !static::FindWithName($data["userName"])) {
             $conn = DBConnection::GetConnection("sinox");
-            $sth=$conn->prepare("INSERT INTO user(userName,email,googleId,ruleAccepted,verifiedEmail ,createdDate)VALUES(?,?,?,TRUE,TRUE,NOW())"); // SANS accepter les régle on neu peut pas se inscrir
+            $sth=$conn->prepare("INSERT INTO user(userName,email,googleId,ruleAccepted ,createdDate)VALUES(?,?,?,TRUE,NOW())"); // SANS accepter les régle on neu peut pas se inscrir
             $sth->bindParam(1 , $data["userName"] ,PDO::PARAM_STR , 50);
             $sth->bindParam(2 , $data["email"] ,PDO::PARAM_STR , 255);
             $sth->bindParam(3 ,  $data["googleId"] ,PDO::PARAM_STR , 150);
@@ -59,7 +59,7 @@ final class UserModel{
     public static function FindWithGoogleId($googleId) : array | null {
         $conn = DBConnection::GetConnection("sinox");
         $sth=$conn->prepare("SELECT * FROM user WHERE googleId = ?;");
-        $sth->bindParam(1 , $googleId ,PDO::PARAM_INT , 10);
+        $sth->bindParam(1 , $googleId ,PDO::PARAM_STR);
         $sth->execute();
         $data = $sth->fetch(PDO::FETCH_ASSOC);
                 if ($data && count($data)>1){

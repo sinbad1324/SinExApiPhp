@@ -42,7 +42,7 @@ class GoogleAuthService {
         $client = $this->client;
         $access_token = $client->fetchAccessTokenWithAuthCode($data["code"]);
         if (isset($access_token["error"])) {
-            return static::json("Il y a eu un probléme lors de la creation de votre compte le code d'authethification est faux! ");
+            return static::json("Il y a eu un probléme lors de la creation de votre compte le code d'authethification est faux! ",$access_token);
         }
         $client->setAccessToken($access_token);
         // avoir les infos avec l'api Oauth2!
@@ -64,8 +64,12 @@ class GoogleAuthService {
             $name = "User_".random_int(1,2000);
         }
         // verifier que le mail n'est pas pris
-        if (UserModel::FindWithEmail($email)) 
-            return static::json("Cette email existe deja dans notre base de donnée",[]);
+        $userWithMail=UserModel::FindWithEmail($email);
+        if ($userWithMail) 
+        {
+                $user = new UserEntities($userWithMail);
+                return static::json("Vous etes connecté!" , ["JWT"=> $user->CreateJWTforUser(),"userData"=>["userName"=>$user->GetName(),"userId"=>$user->GetId()]] ,true);
+        }
         // toutes les condition remplis nous allons créé un nouveau utilisateur: 
         $newUser=UserModel::CreateOAuthUser([
             "userName"=> $name,
@@ -77,7 +81,7 @@ class GoogleAuthService {
             $user = new UserEntities(UserModel::GetLastUserAdded());
             return static::json("Vous etes connecté!" , ["JWT"=> $user->CreateJWTforUser(),"userData"=>["userName"=>$user->GetName(),"userId"=>$user->GetId()]] ,true);
         }
-        return static::json("Il y a eu un probléme lors de la creation de votre compte!",$access_token);
+        return static::json("Il y a eu un probléme lors de la creation de votre compte!");
     }
 
 }

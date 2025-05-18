@@ -180,7 +180,7 @@ final class AuthController extends BaseController
             $ServiceResponse=$newOAuthService->Connection($data);
             $response->getBody()->write($ServiceResponse);
         // }
-        $response->getBody()->write(static::json("Votre compte n'est pas créé selon votre souhet!",$data,false));
+        // $response->getBody()->write(static::json("Votre compte n'est pas créé selon votre souhet!",$data,false));
 
         return $response;
     }
