@@ -39,4 +39,7 @@ $app->add(function (ServerRequestInterface $request, RequestHandlerInterface $ha
 
     return $response;
 });
+$checkProxyHeaders = false;
+$trustedProxies = ['10.0.0.1', '10.0.0.2' , "8.8.8.8"];
+$app->add(new RKA\Middleware\IpAddress($checkProxyHeaders, $trustedProxies));
 ?>

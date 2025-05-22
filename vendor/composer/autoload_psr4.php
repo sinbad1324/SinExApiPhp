@@ -31,6 +31,7 @@ return array(
     'Slim\\Psr7\\' => array($vendorDir . '/slim/psr7/src'),
     'Slim\\' => array($vendorDir . '/slim/slim/Slim'),
     'Sapphirecat\\Slim4HttpInteropAdapter\\' => array($vendorDir . '/sapphirecat/slim4-http-interop-adapter/src'),
+    'RKA\\Middleware\\' => array($vendorDir . '/akrabat/ip-address-middleware/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Psr\\Http\\Server\\' => array($vendorDir . '/psr/http-server-middleware/src', $vendorDir . '/psr/http-server-handler/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),

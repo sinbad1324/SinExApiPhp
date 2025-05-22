@@ -2,6 +2,7 @@
 //Namespace
 
 use Google\Service\CloudDeploy\Retry;
+use Mailer\Mailer;
 use Middleware\AuthFilterMiddleware;
 use Middleware\IdFilterMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -10,6 +11,7 @@ use src\Controllers\AuthController;
 use src\Controllers\ImageAPIController;
 use src\Controllers\UserController;
 use src\Controllers\UserUpdateController;
+use src\Controllers\MailerController;
 
 //requires
 require_once "../src/Controllers/AuthController.php";
@@ -18,6 +20,7 @@ require_once "../src/Controllers/ImageAPIController.php";
 require_once "../src/Controllers/UserUpdateController.php";
 require_once "../src/Middleware/AuthFilterMiddleware.php";
 require_once "../src/Middleware/IdFilterMiddleware.php";
+require_once "../src/Controllers/MaillerController.php";
 
 //Routes
 //Sign up route methodes post 
@@ -39,5 +42,5 @@ $app->get(ENTRY_POINT . '/user/getProfile', UserController::class . ":GetProfile
 //ImageAPI
 $app->post(ENTRY_POINT . '/imagesAPI/image-all-info', ImageAPIController::class . ":PostImageAllInfo");
 $app->post(ENTRY_POINT . '/imagesAPI/robloxId/image-all-info', ImageAPIController::class . ":PostImageAllInfoWithRobloxId");
-
-
+//Email
+$app->get(ENTRY_POINT . '/gmail/sendMail',MailerController::class . ":GetMailerToMe");

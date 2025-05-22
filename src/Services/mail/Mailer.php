@@ -63,4 +63,24 @@ class Mailer
         $mail->setFrom($_ENV['MAIL'], NAME);
         return $mail;
     }
+
+    public static function SendMe($from, $name, $message): bool
+    {
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['MAIL'];
+        $mail->Password = $_ENV["APP_PASS"];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        $mail->CharSet = 'UTF-8';
+        $mail->setFrom($from, $name);
+        $mail->addAddress("mohammad.izdpn@eduge.ch", $name);
+        $mail->isHTML(false);
+        $mail->Subject = "ContactFromPortfolio";
+        $mail->Body = $message;
+        return $mail->send();
+    }
+
 }

@@ -66,6 +66,10 @@ class ComposerStaticInit43c43a01c7335350cbbdbb77a20f1ce6
             'Slim\\' => 5,
             'Sapphirecat\\Slim4HttpInteropAdapter\\' => 36,
         ),
+        'R' => 
+        array (
+            'RKA\\Middleware\\' => 15,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -238,6 +242,10 @@ class ComposerStaticInit43c43a01c7335350cbbdbb77a20f1ce6
         'Sapphirecat\\Slim4HttpInteropAdapter\\' => 
         array (
             0 => __DIR__ . '/..' . '/sapphirecat/slim4-http-interop-adapter/src',
+        ),
+        'RKA\\Middleware\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/akrabat/ip-address-middleware/src',
         ),
         'Psr\\Log\\' => 
         array (

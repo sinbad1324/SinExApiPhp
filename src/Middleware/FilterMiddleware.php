@@ -36,8 +36,10 @@ final class FilterMiddleware extends BaseMiddleware
             foreach ($data as $key => $value) {
                 if (gettype($value)=="array") {
                     $newData[$key] = $this->Filter($value);
-                }elseif (gettype($value)=="string")
-                    $newData[$key]=filter_var($value , FILTER_SANITIZE_SPECIAL_CHARS);
+                }elseif (gettype($value)=="string"){
+                    if (!str_contains(strtolower($key),"password") && $key != "JWT") 
+                        $newData[$key]=filter_var($value , FILTER_SANITIZE_SPECIAL_CHARS);
+                    }
             }
         }
         return  $newData;

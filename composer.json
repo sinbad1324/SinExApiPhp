@@ -12,6 +12,7 @@
         "php-di/php-di": "^7.0",
         "google/apiclient": "^2.14",
         "phpmailer/phpmailer": "^6.9",
-        "web-token/jwt-framework": "^4.0"
+        "web-token/jwt-framework": "^4.0",
+        "akrabat/ip-address-middleware": "^2.6"
     }
 }

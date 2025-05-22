@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '752afd3938f95f1f1ad7bedc382da3b45d6b08d8',
+        'reference' => '230f307d6426ab9e0e2fa5aabf0941cb36e695d4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,11 +13,26 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '752afd3938f95f1f1ad7bedc382da3b45d6b08d8',
+            'reference' => '230f307d6426ab9e0e2fa5aabf0941cb36e695d4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'akrabat/ip-address-middleware' => array(
+            'pretty_version' => '2.6.1',
+            'version' => '2.6.1.0',
+            'reference' => 'ff2a118f6c0214fe006156d5e28f1a4195ca6caf',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../akrabat/ip-address-middleware',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'akrabat/rka-ip-address-middleware' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'brick/math' => array(
             'pretty_version' => '0.12.3',
